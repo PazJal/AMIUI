@@ -1,9 +1,13 @@
 import React from 'react';
 
 
+import CallInput from '../components/CallInput';
+
+
 const DashboardPage = () => (
-  <div>
+  <div> 
     Dashboard page content. 
+    <CallInput />
   </div>
 );
 

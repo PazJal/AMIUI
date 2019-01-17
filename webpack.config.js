@@ -15,6 +15,7 @@ if(process.env.NODE_ENV === 'test') {
 
 module.exports = (env) => {
   const isProduction = (env === 'production');
+  console.log(isProduction);
   return {
     entry: ['babel-polyfill', './src/app.js'],
     output: {
@@ -74,10 +75,10 @@ module.exports = (env) => {
         'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
       })
     ],
-    devtool:isProduction ? 'source-map' : 'cheap-eval-source-map',
+    devtool:isProduction ? 'source-map' : 'eval-source-map',
     devServer:{
-      contentBase: path.join(__dirname,'public'),
-      historyApiFallback: true,
+      contentBase: path.join(__dirname , 'public'),
+      // historyApiFallback: true,
       publicPath: '/dist/'
     }
   };

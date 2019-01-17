@@ -1,5 +1,5 @@
 {
-  "name": "Boilerplate-react-app",
+  "name": "AMI-React-UI",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,6 +7,7 @@
     "build:dev": "webpack",
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
+    "dev-all": "webpack && nodemon server/server.js",
     "test": "cross-env NODE_ENV=test jest --config=jest.config.json",
     "start": "node server/server.js",
     "heroku-postbuild": "npm run build:prod"
@@ -15,6 +16,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "asterisk-manager": "^0.1.16",
+    "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -22,6 +25,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "firebase": "^5.7.2",
     "history": "^4.7.2",
