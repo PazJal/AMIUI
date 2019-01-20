@@ -8,7 +8,7 @@ import QueueList from '../components/QueueList';
 
 const DashboardPage = () => (
   <div> 
-    Dashboard page content. !
+    This is the dashboard component:
     <CallInput />
     <QueueInput /> 
     <QueueInfo />
