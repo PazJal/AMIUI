@@ -21,7 +21,7 @@ const getQueueStatus = (queue) => {
   /*
     TODO: At the moment is set to a hardcoded queue. 
       1) Add input validation
-      2) Set to work with input
+      2) Set to work with input - Done , add tests.
       3) Add error handling.
       4) Add a real uuid. - Done, add test.
       5) Test multiple simultaneoues requests.
