@@ -13,13 +13,13 @@ export class QueueInput extends React.Component {
   render() {
     return (
       <div>
-        Agent
-        <input type="text" name="" id="agent"/>
+        Queue
+        <input type="text" name="" id="queue"/>
         <button onClick={ (e) => {
           console.log('this is running.');
   
         //Rough draft : choose with DOM selector and insert value - Change later to be bound to state.
-        const agentToLogin = document.querySelector('input#agent').value;
+        const queueToCheck = document.querySelector('input#queue').value;
 
         // Axios.post(`http://localhost:3000/queue/1002`, {
         // })
@@ -29,7 +29,7 @@ export class QueueInput extends React.Component {
         // .catch(function (error) {
         //   console.log(error);
         // });
-        this.props.startUpdateQueueInfo(1002);
+        this.props.startUpdateQueueInfo(queueToCheck);
       }  
       }>Get Queue status</button>
       </div>

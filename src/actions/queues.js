@@ -4,7 +4,7 @@ export const startUpdateQueueInfo = (queue = undefined) => {
   return (dispatch) => {
 
     //TODO: add input check.
-    axios.post('/queue/1002' , {})
+    axios.post(`/queue/${queue}` , {})
       .then((res) => {
         console.log(res);
         console.log('Reducer about to run.');

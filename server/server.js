@@ -6,7 +6,8 @@ const app = express();
 const publicPath = path.join(__dirname, '..' , 'public');
 const port = process.env.PORT || 3000;
 
-const {placeCall , getQueueStatus} = require('./api/callDispatcher');
+const {placeCall} = require('./api/callDispatcher');
+const {getQueueStatus} = require('./api/queueInformation');
 
 
 app.use(express.static(publicPath));
@@ -24,7 +25,7 @@ app.post('/place/:number' , (req , res , next) => {
 app.post('/queue/:queue' , async (req , res , next) => {
   console.log('body: ' , req.body);
   const queue = req.params.queue;
-  const result = await getQueueStatus(1002);
+  const result = await getQueueStatus(queue);
   console.log(result);
   res.send(result);
   next();
