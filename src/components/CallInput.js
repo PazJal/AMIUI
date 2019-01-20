@@ -7,7 +7,9 @@ export class CallInput extends React.Component {
   render() {
     return (
       <div>
+        Extension: 
         <input type="text" name="" id="ext"/>
+        Number: 
         <input type="text" name="" id="num"/>
         <button onClick={ (e) => {
   
