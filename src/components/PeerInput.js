@@ -1,10 +1,10 @@
 import React from 'react';
 import Axios from 'axios';
 import {connect} from 'react-redux';
-import {startUpdateQueueInfo} from '../actions/queues'; 
+import {startUpdatePeerInfo} from '../actions/peers'; 
 
 
-export class QueueInput extends React.Component {
+export class PeerInput extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
@@ -13,13 +13,13 @@ export class QueueInput extends React.Component {
   render() {
     return (
       <div className="content-container content-container--spaced">
-        Queue
-        <input type="text" name="" id="queue"/>
+        Peer
+        <input type="text" name="" id="peer"/>
         <button onClick={ (e) => {
           console.log('this is running.');
   
         //Rough draft : choose with DOM selector and insert value - Change later to be bound to state.
-        const queueToCheck = document.querySelector('input#queue').value;
+        const peerToCheck = document.querySelector('input#peer').value;
 
         // Axios.post(`http://localhost:3000/queue/1002`, {
         // })
@@ -29,9 +29,9 @@ export class QueueInput extends React.Component {
         // .catch(function (error) {
         //   console.log(error);
         // });
-        this.props.startUpdateQueueInfo(queueToCheck);
+        this.props.startUpdatePeerInfo(peerToCheck);
       }  
-      }>Get Queue status</button>
+      }>Get Peer status</button>
       </div>
     );
   };
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
 
 //connect dispatch action creators to props.
 const mapDispatchToProps = {
-  startUpdateQueueInfo
+  startUpdatePeerInfo
 }
 
-export default connect(mapStateToProps , mapDispatchToProps)(QueueInput);
+export default connect(mapStateToProps , mapDispatchToProps)(PeerInput);

@@ -13,7 +13,7 @@ export class QueueInfo extends React.Component {
 
   render() {
     return(
-    <div>
+    <div className="content-container content-container--spaced">
       This is the queueInfo componenet. 
     </div>
     );

@@ -6,7 +6,7 @@ export class CallInput extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="content-container content-container--spaced">
         Extension: 
         <input type="text" name="" id="ext"/>
         Number: 

@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import QueueListItem from './QueueListItem';
+
 
 export class QueueList extends React.Component {
   constructor(props) {
@@ -11,12 +13,7 @@ export class QueueList extends React.Component {
   render() {
     const queueInfo = this.props.queue.queue ? this.props.queue.queue.queueInfo.queue : undefined;
     const members = this.props.queue.queue ? this.props.queue.queue.members.map((member , index) => (
-      <div key={index}>
-        <p>
-        Name: {member.name},
-        Calls Taken: {member.callsTaken}
-        </p>  
-      </div>
+      <QueueListItem key={index} {...member} />
     )) : undefined;
     return(
     <div>
