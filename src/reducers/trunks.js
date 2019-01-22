@@ -1,10 +1,10 @@
-export default (state = {} , action) => {
-  console.log('Reducer is working');
+export default (state = [] , action) => {
+  console.log('Trunk Reducer is working' , action.trunks);
   switch(action.type) {
     case 'UPDATE_TRUNK_INFO':
-      return{
-        trunks: action.trunk 
-       } ;
+      return {
+        trunks: action.trunks
+       };
     default:
       return state;
   }

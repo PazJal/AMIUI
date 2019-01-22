@@ -1,14 +1,14 @@
 
 
-// export const startUpdateTrunkInfo = (queue = undefined) => {
+// export const startUpdateTrunkInfo = (trunks) => {
 //   return (dispatch) => {
-
-//     // //TODO: add input check.
+//     dispatch(updateQueueInfo(trunks));
+//     //TODO: add input check.
 //     // axios.post(`/queue/${queue}` , {})
 //     //   .then((res) => {
 //     //     console.log(res);
 //     //     console.log('Reducer about to run.');
-//     //     dispatch(updateQueueInfo(res.data));
+//     //     ;
 //     //   })
 //     //   .catch((err) => {
 //     //     console.log('Error dispatching the axios request to get queue info' , err);
@@ -16,11 +16,11 @@
 //   }
 // }
 
-export const updateTrunkInfo = (trunk) => {
+export const updateTrunkInfo = (trunks) => {
   console.log('Action on Redux regardins trunks');
   return {
     type: 'UPDATE_TRUNK_INFO',
-    trunks: trunk
+    trunks: trunks
   };
 }
 
