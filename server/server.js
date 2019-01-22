@@ -3,18 +3,47 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const moment = require('moment');
 
+const http = require('http');
+const socketIO = require('socket.io');
+
+
+//Trunk monitor setup:
+
+//Data should be transmitted continounsly via websocket.
+
 const {server , user , password} = require('./conf/asterisk-conf');
 const ami = new require('asterisk-manager')('5038', server, user, password, true);
-console.log('Processing queue status request.');
 ami.keepConnected();
-let now = moment.now()
-ami.on('registry' , function(event) {
-  console.log('Time since last emitted event is: ' ,moment(moment.now() - now).from(0));
-  console.log(event);
-  now = moment.now();
-});
+
  
 const app = express();
+const httpServer = http.createServer(app);
+const io = socketIO(httpServer);
+
+//Trunk monitor setup:
+
+//Data should be transmitted continounsly via websocket.
+
+io.on('connection' , function (socket) {
+  console.log('new user connected.');
+  let now = moment.now()
+  ami.on('registry' , function(event) {
+    console.log('Time since last emitted event is: ' ,moment(now - moment.now()).from(0));
+    now = moment.now();
+    console.log(event);
+    const {domain} = event;
+    const trunk = {
+      domain,
+      timestamp: now
+    }
+    socket.emit('trunkStatusUpdate' ,trunk);
+    // updateTrunkInfo(trunk);
+  });
+  
+  
+});
+
+
 const publicPath = path.join(__dirname, '..' , 'public');
 const port = process.env.PORT || 3000;
 
@@ -73,6 +102,11 @@ app.get('*' ,(req , res , next) => {
   
 });
 
-app.listen(port , () => {
+
+
+
+
+
+httpServer.listen(port , () => {
   console.log('server is up on port' , port);
 });
