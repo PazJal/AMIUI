@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import moment from 'moment';
+import FlipMove from 'react-flip-move';
 
 import io from 'socket.io-client';
-import configureStore from '../store/configureStore'
 
 import {updateTrunkInfo} from '../actions/trunks';
+
+import TrunkListItem from './TrunkListItem';
 
 
 
@@ -17,7 +18,6 @@ export class TrunkList extends React.Component {
 
   componentDidMount(state) {
     const trunks = this.props.trunks;
-    const store = configureStore();
     const socket = io('http://localhost:3000');
     socket.on('connect' , function () {
       console.log('Connected to server.');
@@ -41,21 +41,22 @@ export class TrunkList extends React.Component {
     console.log(this.props.trunks);
     const trunksReadble = this.props.trunks.trunks && this.props.trunks.trunks
     .sort((a , b) => {
-      if(a.domain > b.domain) {
+      if(a.timestamp > b.timestamp) {
         return 1;
       } else {
         return -1;
       }
     })
     .map((trunk , index) => (
-      <div key={index}>
-        Name: {trunk.domain} - Last registered: {moment(trunk.timestamp).format('DD-MM-YYYY HH:mm:ss ZZ')}
-      </div>
+      <TrunkListItem key={trunk.domain} {...trunk} />
     ))
     return(
     <div>
       <h1>This is the trunks component</h1>
-      {trunksReadble}
+      <FlipMove>
+        {trunksReadble}
+      </FlipMove>
+      
     </div>
     );
   }
