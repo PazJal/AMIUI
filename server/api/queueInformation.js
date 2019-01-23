@@ -1,4 +1,4 @@
-const {port , server , user , password} = require('../conf/asterisk-conf');
+const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
 const uuid = require('uuid').v4;
 
 const parseEventToMember = (event) => {
@@ -30,7 +30,7 @@ const getQueueStatus = (queue) => {
   //Return promise - Async request.
   return new Promise(function (resolve , reject) {
     //Set up conneciton: 
-    const ami = new require('asterisk-manager')(port, server, user, password, true);
+    const ami = new require('asterisk-manager')(amiPort, amiServer, amiUser, amiPassword, true);
     // console.log('Processing queue status request.');
     ami.keepConnected();
     const actionid = uuid();

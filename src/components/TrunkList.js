@@ -42,9 +42,9 @@ export class TrunkList extends React.Component {
     const trunksReadble = this.props.trunks.trunks && this.props.trunks.trunks
     .sort((a , b) => {
       if(a.timestamp > b.timestamp) {
-        return 1;
-      } else {
         return -1;
+      } else {
+        return 1;
       }
     })
     .map((trunk , index) => (

@@ -11,8 +11,8 @@ const socketIO = require('socket.io');
 
 //Data should be transmitted continounsly via websocket.
 
-const {server , user , password} = require('./conf/asterisk-conf');
-const ami = new require('asterisk-manager')('5038', server, user, password, true);
+const {amiServer , amiUser , amiPassword , amiPort} = require('./conf/asterisk-conf');
+const ami = new require('asterisk-manager')(amiPort, amiServer, amiUser, amiPassword, true);
 ami.keepConnected();
 
  
