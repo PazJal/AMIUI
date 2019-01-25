@@ -40,9 +40,9 @@ const getQueueStatus = (queue) => {
     //Make info request
     ami.action(generateQueueStatusObject(actionid , queue) ,function (err ,res) {
       if(err){
-        console.log('An errror has occred' , err);
+        console.log(`Unable to get information for queue ${queue}` , err);
       } else {
-        console.log('Queue add results: ' , res);
+        console.log('Queue Status results: ' , res);
       }
     });
     //First draft - incomplete - wait on all params to reach and compile a list. 
