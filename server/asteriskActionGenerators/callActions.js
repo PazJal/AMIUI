@@ -1,8 +1,9 @@
+//All ami-action generator should receive a uuid as first argument. 
 
-
-const generateOriginateCallAction = (extension , context , numToCall) => {
+const generateOriginateCallAction = (uuid, extension , context , numToCall) => {
   return {
     'action':'originate',
+    'actionid': uuid,
     'channel':extension,
     'context':'from-internal', //Add variable context flexibility.
     'exten': numToCall,

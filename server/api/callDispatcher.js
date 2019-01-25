@@ -1,3 +1,7 @@
+//Offical libs: 
+const uuid = require('uuid/v4');
+
+//Project requires:
 const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
 const {generateOriginateCallAction} = require('../asteriskActionGenerators/callActions');
     
@@ -11,11 +15,12 @@ const placeCall = (number , extension) => {
   });
 
   //Handle information needed to orginiate a call - note that the extension assumes SIP as interface.
+  const actoinId = uuid();
   const numToCall = Number.parseInt(number) ? number : 101;
   const extensionString = `SIP/${extension}`;
 
   //Generate action object and pass it to ami api. 
-  ami.action(generateOriginateCallAction(extensionString , undefined, numToCall), function(err, res) {
+  ami.action(generateOriginateCallAction(actionId, extensionString , undefined, numToCall), function(err, res) {
     if(err) {
       //Print an error that will indicate what went wrong for the programmer.
       console.log(`Error - Unable to originate call from ${extensionString} to ${numToCall} -- placeCall()` , err);
