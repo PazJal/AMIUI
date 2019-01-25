@@ -1,6 +1,7 @@
 const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
 const uuid = require('uuid').v4;
 
+//Utility function to create a JSON onbject from the data.
 const parseEventToMember = (event) => {
   return {
     callsTaken:  event.callstaken,
@@ -13,10 +14,7 @@ const parseEventToMember = (event) => {
   };
 }
 
-
-
 //A function that queries the AMI regarding a certain queue status.
-
 const getQueueStatus = (queue) => {
   /*
     TODO: At the moment is set to a hardcoded queue. 

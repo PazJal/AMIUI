@@ -1,12 +1,21 @@
-const uuid = require('uuid').v4;
+//Each action generator first argument should be a uuid - 
+//This will allow a tracking of different actions.
+
+const generateQueueStatusObject = (uuid , queue) => {
+  return {
+    'action': 'queuestatus',
+    actionid: uuid,
+    'queue': queue
+  }
+}
 
 
-const generateAgentLoginObject = (agent , extension , queue) => {
+const generateAgentLoginObject = (uuid , agent , extension , queue) => {
   //Check input validity
   if( Number.parseInt(agent) && Number.parseInt(extension) && Number.parseInt(queue) ) {
     return {
     'action':'queueadd',
-    'actionid': uuid(),
+    'actionid': uuid,
     'queue':`${queue}`,
     'interface':`SIP/${extension}`,
     'penalty': 0,
@@ -18,12 +27,12 @@ const generateAgentLoginObject = (agent , extension , queue) => {
   }
 }
 
-const generateAgentLogoutObject = (extension , queue) => {
+const generateAgentLogoutObject = (uuid, extension , queue) => {
   //Check input validity
   if( Number.parseInt(extension) && Number.parseInt(queue) ) {
     return {
     'action':'queueremove',
-    'actionid': uuid(),
+    'actionid': uuid,
     'queue':`${queue}`,
     'interface':`SIP/${extension}`
     }
