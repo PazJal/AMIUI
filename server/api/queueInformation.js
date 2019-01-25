@@ -1,5 +1,10 @@
-const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
+//Offical libs:
 const uuid = require('uuid').v4;
+
+//Project requires:
+const {generateQueueStatusObject} = require('../asteriskActionGenerators/queueActions');
+
+const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
 
 //Utility function to create a JSON onbject from the data.
 const parseEventToMember = (event) => {
@@ -33,12 +38,7 @@ const getQueueStatus = (queue) => {
     ami.keepConnected();
     const actionid = uuid();
     //Make info request
-    ami.action({
-      'action': 'queuestatus',
-      actionid,
-      'queue': queue
-
-    } ,function (err ,res) {
+    ami.action(generateQueueStatusObject(actionid , queue) ,function (err ,res) {
       if(err){
         console.log('An errror has occred' , err);
       } else {
@@ -58,13 +58,14 @@ const getQueueStatus = (queue) => {
       }
       
     });
-
+    //Listen for queue member information.
     ami.on('queuemember' , function(event) {
       //Check that this is related to the request:
       if(event.actionid === actionid){ 
         members.push(parseEventToMember(event));
       }
     });
+    //Listen for queue status last message indicating all the information has been sent.
     ami.on('queuestatuscomplete' , function(event) {
       console.log('Completed!');
       isCompleted = true;
@@ -74,14 +75,13 @@ const getQueueStatus = (queue) => {
         members
       });
     });
-    //Data pull complete:
+    //Set a 1 second default time out for the request:
     setTimeout(() => {
       reject('Turd!');
     }, 1000);
   }
   );    
 }
-
 
 module.exports = {
   getQueueStatus

@@ -43,5 +43,6 @@ const generateAgentLogoutObject = (uuid, extension , queue) => {
 
 module.exports = { 
   generateAgentLoginObject,
-  generateAgentLogoutObject
+  generateAgentLogoutObject,
+  generateQueueStatusObject
 }
