@@ -15,7 +15,7 @@ const placeCall = (number , extension) => {
   });
 
   //Handle information needed to orginiate a call - note that the extension assumes SIP as interface.
-  const actoinId = uuid();
+  const actionId = uuid();
   const numToCall = Number.parseInt(number) ? number : 101;
   const extensionString = `SIP/${extension}`;
 

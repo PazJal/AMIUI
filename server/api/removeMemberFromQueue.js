@@ -1,6 +1,6 @@
 const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
 const uuid = require('uuid').v4;
-const {generateAgentLogoutObject} = require('./queueActions');
+const {generateAgentLogoutObject} = require('../asteriskActionGenerators/queueActions');
 
 const parseEventToMember = (event) => {
   return {
@@ -36,9 +36,9 @@ const removeMemberFromQueue = (queue , endpoint , name) => {
     ami.keepConnected();
     const actionid = uuid();
     //Make info request
-    ami.action( generateAgentLogoutObject(queue , endpoint , name) ,function (err ,res) {
+    ami.action( generateAgentLogoutObject(actionid, queue , endpoint , name) ,function (err ,res) {
       if(err){
-        console.log('An errror has occred' , err);
+        console.log(`Error - Unable to remove interface: ${endpoint} from ${queue}` , err);
       } else {
         console.log('Queue remove results: ' , res);
       }

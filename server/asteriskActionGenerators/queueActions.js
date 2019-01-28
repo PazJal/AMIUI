@@ -10,7 +10,7 @@ const generateQueueStatusObject = (uuid , queue) => {
 }
 
 
-const generateAgentLoginObject = (uuid , agent , extension , queue) => {
+const generateAgentLoginObject = (uuid , queue , extension , agent) => {
   //Check input validity
     return {
     'action':'queueadd',
@@ -23,7 +23,7 @@ const generateAgentLoginObject = (uuid , agent , extension , queue) => {
     };
 }
 
-const generateAgentLogoutObject = (uuid, extension , queue) => {
+const generateAgentLogoutObject = (uuid, queue, extension) => {
   //Check input validity
     return {
     'action':'queueremove',
