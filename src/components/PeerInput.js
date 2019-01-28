@@ -3,6 +3,10 @@ import Axios from 'axios';
 import {connect} from 'react-redux';
 import {startUpdatePeerInfo} from '../actions/peers'; 
 
+import {Panel} from 'react-bootstrap';
+
+
+
 
 export class PeerInput extends React.Component {
   constructor(props){
@@ -12,26 +16,27 @@ export class PeerInput extends React.Component {
 
   render() {
     return (
-      <div className="content-container content-container--spaced">
-        Peer
-        <input type="text" name="" id="peer"/>
-        <button onClick={ (e) => {
-          console.log('this is running.');
-  
-        //Rough draft : choose with DOM selector and insert value - Change later to be bound to state.
-        const peerToCheck = document.querySelector('input#peer').value;
-
-        // Axios.post(`http://localhost:3000/queue/1002`, {
-        // })
-        // .then(function (response) {
-        //   console.log(response);
-        // })
-        // .catch(function (error) {
-        //   console.log(error);
-        // });
-        this.props.startUpdatePeerInfo(peerToCheck);
-      }  
-      }>Get Peer status</button>
+      <div>
+        <Panel bsStyle='primary'>
+          <Panel.Heading>
+            <Panel.Title>
+              This is the Peer Input component.
+            </Panel.Title>
+          </Panel.Heading>
+          <Panel.Body>
+            Peer
+            <input type="text" name="" id="peer"/>
+            <button onClick={ (e) => {
+              console.log('this is running.');
+        
+                //Rough draft : choose with DOM selector and insert value - Change later to be bound to state.
+                const peerToCheck = document.querySelector('input#peer').value;
+                this.props.startUpdatePeerInfo(peerToCheck);
+              }  
+            }>Get Peer status</button>
+          </Panel.Body>
+        </Panel>
+        
       </div>
     );
   };

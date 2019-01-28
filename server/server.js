@@ -50,6 +50,8 @@ const port = process.env.PORT || 3000;
 const {placeCall} = require('./api/callDispatcher');
 const {getQueueStatus} = require('./api/queueInformation');
 const {getPeerStatus} = require('./api/peerInformation');
+const {addMemberToQueue} = require('./api/addMemberToQueue');
+const {removeMemberFromQueue} = require('./api/removeMemberFromQueue');
 
 
 //Add some wierdo event listener:
@@ -72,6 +74,25 @@ app.post('/queue/:queue' , async (req , res , next) => {
   const queue = req.params.queue;
   const result = await getQueueStatus(queue);
   console.log(result);
+  res.send(result);
+  next();
+});
+
+app.post('/queue/add' , async (req , res , next) => {
+  console.log('body: ' , req.body);
+  const {nameToAdd , endpointToAdd, queueToAddTo} = req.body;
+  const result = await addMemberToQueue(queueToAddTo , endpointToAdd , nameToAdd);
+  console.log("Queue Add",result);
+  res.send(result);
+  next();
+  
+});
+
+app.post('/queue/remove' , async (req , res , next) => {
+  console.log('body: ' , req.body);
+  const {nameToAdd , endpointToAdd, queueToAddTo} = req.body;
+  const result = await removeMemberFromQueue(queueToAddTo , endpointToAdd , nameToAdd);
+  console.log("Queue Remove" , result);
   res.send(result);
   next();
   

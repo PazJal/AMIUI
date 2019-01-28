@@ -55,12 +55,7 @@ export class QueueListItem extends React.Component{
       const readableStatus = getReadableState(status);
     return (
       <div>
-        <h5>{name}</h5>
-        <p>
-          {name} has taken {callsTaken} calls. <br/>
-          {readablePaused} - {readableStatus} <br/>
-          {callsTaken === '0' ? 'Has not taken any calls yet.' : `Last call was ${readableTimeSinceLastCall}` }
-        </p>
+        
         <button>Remove from Queue Button</button>
       </div>
     );

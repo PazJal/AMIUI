@@ -1,5 +1,6 @@
 const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
 const uuid = require('uuid').v4;
+const {generateAgentLoginObject} = require('./queueActions');
 
 const parseEventToMember = (event) => {
   return {
@@ -17,7 +18,7 @@ const parseEventToMember = (event) => {
 
 //A function that queries the AMI regarding a certain queue status.
 
-const getQueueStatus = (queue) => {
+const addMemberToQueue = (queue , endpoint , name) => {
   /*
     TODO: At the moment is set to a hardcoded queue. 
       1) Add input validation
@@ -35,12 +36,7 @@ const getQueueStatus = (queue) => {
     ami.keepConnected();
     const actionid = uuid();
     //Make info request
-    ami.action({
-      'action': 'queuestatus',
-      actionid,
-      'queue': queue
-
-    } ,function (err ,res) {
+    ami.action( generateAgentLoginObject(queue , endpoint , name) ,function (err ,res) {
       if(err){
         console.log('An errror has occred' , err);
       } else {
@@ -48,33 +44,10 @@ const getQueueStatus = (queue) => {
       }
     });
     //First draft - incomplete - wait on all params to reach and compile a list. 
-    let members = [];
-    let queueInfo = undefined;
-    let isCompleted = false;
-    //Catch all params:
-    ami.on('queueparams' , function (event) {
-      //Check that this is related to the request:
-      if(event.actionid === actionid){
-        console.log(event);
-        queueInfo = event;
-      }
-      
-    });
-
-    ami.on('queuemember' , function(event) {
-      //Check that this is related to the request:
-      if(event.actionid === actionid){ 
-        members.push(parseEventToMember(event));
-      }
-    });
-    ami.on('queuestatuscomplete' , function(event) {
-      console.log('Completed!' , queueInfo);
-      isCompleted = true;
-      queueInfo = queueInfo ? queueInfo : {queue: 'Queue not found'};
+    ami.on('queuememberadded' , function(event) {
+      console.log('added queue member');
       resolve({
-        isCompleted,
-        queueInfo,
-        members
+        event
       });
     });
     //Data pull complete:
@@ -87,5 +60,5 @@ const getQueueStatus = (queue) => {
 
 
 module.exports = {
-  getQueueStatus
+  addMemberToQueue
 };

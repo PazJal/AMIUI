@@ -3,6 +3,8 @@ import Axios from 'axios';
 import {connect} from 'react-redux';
 import {startUpdateQueueInfo} from '../actions/queues'; 
 
+import {Panel} from 'react-bootstrap';
+
 
 export class QueueInput extends React.Component {
   constructor(props){
@@ -12,26 +14,25 @@ export class QueueInput extends React.Component {
 
   render() {
     return (
-      <div className="content-container content-container--spaced">
-        Queue
-        <input type="text" name="" id="queue"/>
-        <button onClick={ (e) => {
-          console.log('this is running.');
-  
-        //Rough draft : choose with DOM selector and insert value - Change later to be bound to state.
-        const queueToCheck = document.querySelector('input#queue').value;
-
-        // Axios.post(`http://localhost:3000/queue/1002`, {
-        // })
-        // .then(function (response) {
-        //   console.log(response);
-        // })
-        // .catch(function (error) {
-        //   console.log(error);
-        // });
-        this.props.startUpdateQueueInfo(queueToCheck);
-      }  
-      }>Get Queue status</button>
+      <div>
+        <Panel bsStyle='primary'>
+          <Panel.Heading>
+            <Panel.Title>This is the Queue input component</Panel.Title>
+          </Panel.Heading>
+          <Panel.Body>
+              Queue
+            <input type="text" name="" id="queue"/>
+            <button onClick={ (e) => {
+              console.log('this is running.');
+      
+              //Rough draft : choose with DOM selector and insert value - Change later to be bound to state.
+              const queueToCheck = document.querySelector('input#queue').value;
+              this.props.startUpdateQueueInfo(queueToCheck);
+              }  
+            }>Get Queue status</button>
+          </Panel.Body>
+        </Panel>
+        
       </div>
     );
   };

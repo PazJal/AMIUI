@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import FlipMove from 'react-flip-move';
+import {ListGroup , ListGroupItem, Panel} from 'react-bootstrap';
+import moment from 'moment';
 
 import io from 'socket.io-client';
 
@@ -38,8 +40,11 @@ export class TrunkList extends React.Component {
   }
 
   render() {
-    console.log(this.props.trunks);
-    const trunksReadble = this.props.trunks.trunks && this.props.trunks.trunks
+    console.log('Current Trunk State: ',this.props.trunks);
+    const trunks = this.props.trunks.trunks ? this.props.trunks.trunks : [];
+    const trunksReadble = trunks.length === 0 ? 
+      <ListGroupItem key='0'>Waiting for trunks to register. </ListGroupItem> :
+      trunks
     .sort((a , b) => {
       if(a.timestamp > b.timestamp) {
         return -1;
@@ -48,15 +53,37 @@ export class TrunkList extends React.Component {
       }
     })
     .map((trunk , index) => (
-      <TrunkListItem key={trunk.domain} {...trunk} />
+      <ListGroupItem key={trunk.domain}>
+        <h3>{trunk.domain}</h3>
+        <p>
+          Last registed at: {moment(trunk.timestamp).format('DD-MM-YYYY HH:mm:ss ZZ')}
+        </p>
+      </ListGroupItem>
+      // <TrunkListItem key={trunk.domain} {...trunk} />
     ))
     return(
     <div>
-      <h1>This is the trunks component</h1>
-      <FlipMove>
-        {trunksReadble}
-      </FlipMove>
-      
+      <Panel bsStyle='primary'>
+        <Panel.Heading>
+          <Panel.Title componentClass="h3">This is the trunks component</Panel.Title>
+        </Panel.Heading>
+        <Panel.Body>
+        <ListGroup>
+        <FlipMove>
+          {trunksReadble}
+        </FlipMove>
+      </ListGroup>
+        </Panel.Body>
+
+      </Panel>
+
+
+      {/* <h1>This is the trunks component</h1>
+      <ListGroup>
+        <FlipMove>
+          {trunksReadble}
+        </FlipMove>
+      </ListGroup> */}
     </div>
     );
   }

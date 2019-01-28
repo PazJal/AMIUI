@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 
 import PeerListItem from './PeerListItem';
 
+import {Panel} from 'react-bootstrap';
+
 
 export class PeerList extends React.Component {
   constructor(props) {
@@ -11,14 +13,18 @@ export class PeerList extends React.Component {
   }
 
   render() {
-    // const queueInfo = this.props.queue.queue ? this.props.queue.queue.queueInfo.queue : undefined;
-    // const members = this.props.queue.queue ? this.props.queue.queue.members.map((member , index) => (
-    //   <QueueListItem key={index} {...member} />
-    // )) : undefined;
     return(
     <div>
-      <h1>Peer List</h1>
-        {this.props.peer.peer ? <PeerListItem {...this.props.peer.peer.peerInfo}/> : 'There are no peers to show at the moment.' }
+      <Panel bsStyle='primary'>
+        <Panel.Heading>
+          <Panel.Title>
+            This is the Peer List Component
+          </Panel.Title>
+        </Panel.Heading>
+        <Panel.Body>
+          {this.props.peer.peer ? <PeerListItem {...this.props.peer.peer.peerInfo}/> : 'There are no peers to show at the moment.' }
+        </Panel.Body>
+      </Panel>
     </div>
     );
   }

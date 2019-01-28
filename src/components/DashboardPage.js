@@ -9,10 +9,12 @@ import QueueList from '../components/QueueList';
 import PeerList from '../components/PeerList';
 import PeerInput from '../components/PeerInput';
 import TrunkList from '../components/TrunkList';
+import QueueMemeberInput from '../components/QueueMemberInput';
 
 const DashboardPage = () => (
   <div className="content-container content-container--spaced"> 
     This is the dashboard component:
+    <QueueMemeberInput />
     <TrunkList />
     <CallInput />
     <QueueInput /> 
