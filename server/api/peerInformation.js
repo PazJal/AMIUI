@@ -1,6 +1,11 @@
-const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
+//Offical requires:
 const uuid = require('uuid').v4;
 
+//Project requires:
+const {amiPort , amiServer , amiUser , amiPassword} = require('../conf/asterisk-conf');
+const {generateSipPeerStatusObject} = require('../asteriskActionGenerators/peerActions');
+
+//Helper functions to parse information.
 const parseEventToPeer = (event) => {
   const {channeltype, peer, peerstatus, privlege, time} = event;
   return {
@@ -8,10 +13,7 @@ const parseEventToPeer = (event) => {
   };
 }
 
-
-
 //A function that queries the AMI regarding a certain queue status.
-
 const getPeerStatus = (peer) => {
   /*
     TODO: At the moment is set to a hardcoded queue. 
@@ -26,41 +28,30 @@ const getPeerStatus = (peer) => {
   return new Promise(function (resolve , reject) {
     //Set up conneciton: 
     const ami = new require('asterisk-manager')(amiPort, amiServer, amiUser, amiPassword, true);
-    // console.log('Processing queue status request.');
     ami.keepConnected();
+    //Setup the uuid for the request.
     const actionid = uuid();
     //Make info request
-    ami.action({
-      'action': 'sippeerstatus',
-      actionid,
-      peer 
-
-    } ,function (err ,res) {
+    ami.action(generateSipPeerStatusObject(actionid , peer) ,function (err ,res) {
       if(err){
-        console.log('An errror has occred' , err);
+        console.log(`Error - Unable to get peer status for ${peer}` , err);
       } else {
-        console.log('Queue add results: ' , res);
+        console.log('PeerStatus results: ' , res);
       }
     });
 
     //First draft - incomplete - wait on all params to reach and compile a list. 
-    let members = [];
     let peerInfo;
     let isCompleted = false;
-    //Catch all params:
-    ami.on('managerevent' , function (event) {
-      console.log(event);
-    });
-
-
+    //Listen for peers tatus update.
     ami.on('peerstatus' , function (event) {
       //Check that this is related to the request:
       if(event.actionid === actionid){
         console.log(event);
         peerInfo =  parseEventToPeer(event);
       }
-      
     });
+    //Listen for peer status end.
     ami.on('sippeerstatuscomplete' , function(event) {
       console.log('Completed!');
       if(event.actionid === actionid){
@@ -71,14 +62,13 @@ const getPeerStatus = (peer) => {
         });
       }
     });
-    //Data pull complete:
+    //Set 1 second default timeout.
     setTimeout(() => {
       reject('Turd!');
     }, 1000);
   }
   );    
 }
-
 
 module.exports = {
   getPeerStatus
